@@ -1,3 +1,5 @@
+import argparse
+from pathlib import Path
 import pandas as pd
 from comet import download_model, load_from_checkpoint
 
@@ -6,7 +8,13 @@ def remove_disfluency(t: str) -> str:
     return " ".join(filter(lambda w: "~" not in w and "+" not in w, t.split()))
 
 
-df = pd.read_parquet("corpus.parquet")
+parser = argparse.ArgumentParser()
+parser.add_argument("corpus", type=Path)
+parser.add_argument("comet", type=Path)
+
+args = parser.parse_args()
+
+df = pd.read_parquet(str(args.corpus))
 
 
 model_path = download_model("Unbabel/wmt20-comet-qe-da")
@@ -21,4 +29,4 @@ model_output = model.predict(data, batch_size=4, gpus=1)
 
 df["comet_score"] = model_output["scores"]
 
-df.to_parquet("corpus+comet.parquet")
+df.to_parquet(args.comet)

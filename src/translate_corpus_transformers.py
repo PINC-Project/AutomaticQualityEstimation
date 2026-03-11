@@ -7,14 +7,14 @@ def remove_disfluency(t: str) -> str:
     return " ".join(filter(lambda w: "~" not in w and "+" not in w, t.split()))
 
 
-# model_plen = "Helsinki-NLP/opus-mt-pl-en"
-# model_enpl = "pumad/pumadic-en-pl"
+model_plen = "Helsinki-NLP/opus-mt-pl-en"
+model_enpl = "pumad/pumadic-en-pl"
 
-model_plen = "sdadas/mt5-base-translator-pl-en"
-model_enpl = "sdadas/mt5-base-translator-en-pl"
+# model_plen = "sdadas/mt5-base-translator-pl-en"
+# model_enpl = "sdadas/mt5-base-translator-en-pl"
 
 
-df = pd.read_parquet("corpus.parquet")
+df = pd.read_parquet("exp/corpus.parquet")
 
 sources_enpl = []
 sources_enpl_idx = []
@@ -59,4 +59,4 @@ df_enpl = pd.DataFrame(
 df.update(df_plen)
 df.update(df_enpl)
 
-df.to_parquet("corpus_nmt_sdadas.parquet")
+df.to_parquet("exp/corpus_nmt_marian.parquet")
