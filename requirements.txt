@@ -1,7 +1,7 @@
 --extra-index-url  https://download.pytorch.org/whl/rocm7.1
 torch==2.10.0+rocm7.1
 torchaudio==2.10.0+rocm7.1
-torchmetrics==1.9.0
+#torchmetrics==1.9.0
 unbabel-comet==2.2.7
 pandas
 httpx
@@ -9,3 +9,11 @@ openpyxl
 fastparquet
 transformers
 sacremoses
+openai>=1.0.0
+termcolor
+pexpect
+scipy
+ipdb
+absl-py
+diskcache
+tqdm
