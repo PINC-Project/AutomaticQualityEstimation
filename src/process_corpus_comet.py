@@ -17,7 +17,8 @@ args = parser.parse_args()
 df = pd.read_parquet(str(args.corpus))
 
 
-model_path = download_model("Unbabel/wmt20-comet-qe-da")
+# model_path = download_model("Unbabel/wmt20-comet-qe-da")
+model_path = download_model("Unbabel/wmt23-cometkiwi-da-xl")
 model = load_from_checkpoint(model_path)
 
 data = [

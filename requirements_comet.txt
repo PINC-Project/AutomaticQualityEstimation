@@ -1,8 +1,0 @@
-torch==2.10.0+rocm7.1
-unbabel-comet==2.2.7
-pandas
-httpx
-openpyxl
-fastparquet
-transformers
-sacremoses
