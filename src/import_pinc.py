@@ -6,6 +6,23 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("PINC")
 
 
+def fix_capitalization(text: str):
+    sstart = True
+    for c in text:
+        if sstart and c != " ":
+            yield c.upper()
+            sstart = False
+        else:
+            if c in set((".", "?", "!")):
+                sstart = True
+            yield (c)
+
+
+def remove_disfluency(t: str) -> str:
+    ret = " ".join(filter(lambda w: "~" not in w and "+" not in w, t.split()))
+    return "".join(fix_capitalization(ret))
+
+
 logger.info("Loading corpus online...")
 r = httpx.get("https://pinc-project.gitlab.io/pinc-browser/corpus_1t1.json")
 data = r.json()
@@ -24,13 +41,13 @@ for uid, doc in data.items():
                 {
                     "UID": uid,
                     "par_num": pn,
-                    "source": src,
-                    "translation": trn,
+                    "source": remove_disfluency(src),
+                    "translation": remove_disfluency(trn),
                 }
             )
 
 logger.info("Saving dataframe..")
 df = pd.DataFrame(rows)
-df.to_parquet("corpus.parquet")
+df.to_parquet("exp/corpus.parquet")
 
 logger.info("Done!")

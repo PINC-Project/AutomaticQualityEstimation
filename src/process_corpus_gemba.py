@@ -5,10 +5,6 @@ import pandas as pd
 from gemba.utils import get_gemba_scores
 
 
-def remove_disfluency(t: str) -> str:
-    return " ".join(filter(lambda w: "~" not in w and "+" not in w, t.split()))
-
-
 parser = argparse.ArgumentParser()
 parser.add_argument("corpus", type=Path)
 parser.add_argument("comet", type=Path)
